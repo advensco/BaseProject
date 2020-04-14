@@ -31,8 +31,8 @@ namespace Advensco.Base
             );
 
             // Register Logger 
-            bool isEnableApiLoggin = Boolean.Parse(ConfigurationManager.AppSettings["EnableApiLoggin"] ?? "false");
-            if (isEnableApiLoggin)
+            bool EnableApiLogging = Boolean.Parse(ConfigurationManager.AppSettings["EnableApiLogging"] ?? "false");
+            if (EnableApiLogging)
                 config.MessageHandlers.Add(new LogRequestAndResponseHandler());
 
             // Register Global Exception Handler     
