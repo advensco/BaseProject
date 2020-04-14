@@ -5,6 +5,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin;
+using Advensco.Base.Logger;
+using System.Data.Entity;
 
 namespace Advensco.Base.Models
 {
@@ -33,6 +35,10 @@ namespace Advensco.Base.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        // Logger Models 
+        public DbSet<ApiLog> ApiLogs { get; set; }
+        public DbSet<CustomLog> CustomLogs { get; set; }
+       
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

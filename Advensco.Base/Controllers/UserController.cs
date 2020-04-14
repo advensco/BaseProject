@@ -1,4 +1,6 @@
-﻿using Advensco.Base.Models;
+﻿using Advensco.Base.Logger;
+using Advensco.Base.Models;
+using Advensco.Base.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -13,7 +15,7 @@ using System.Web.Http.Cors;
 
 namespace Advensco.Base.Controllers
 {
-    [RoutePrefix("api/User"),EnableCors(origins: "*", headers: "*", methods: "*")]
+    [RoutePrefix("api/User"), EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UserController : ApiController
     {
 
@@ -45,7 +47,7 @@ namespace Advensco.Base.Controllers
         }
 
 
-        [HttpPost, Route("Login"), AllowAnonymous,]
+        [HttpPost, Route("Login"), AllowAnonymous]
         public async Task<HttpResponseMessage> Login(LoginVM objVM)
         {
 
@@ -81,8 +83,9 @@ namespace Advensco.Base.Controllers
                     break;
             }
             var tm = new TokenManager();
-            return Request.CreateResponse(response);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
+
 
         [System.Web.Http.HttpPost, Route("Register")]
         public async Task<HttpResponseMessage> Register(User userToCreate)
@@ -97,9 +100,9 @@ namespace Advensco.Base.Controllers
                 FirstName = userToCreate.FirstName,
                 LastName = userToCreate.LastName
             };
-           // UOW.Users.Add(user);
+            // UOW.Users.Add(user);
 
-            IdentityResult result = await  UserManager.CreateAsync(user, userToCreate.Password);
+            IdentityResult result = await UserManager.CreateAsync(user, userToCreate.Password);
 
             if (result.Succeeded)
             {
@@ -109,7 +112,7 @@ namespace Advensco.Base.Controllers
                     Data = user.Id,
                     Message = "User Registered Successfully"
                 };
-                return Request.CreateResponse(res);
+                return res;  //Request.CreateResponse(res);
             }
             else
             {

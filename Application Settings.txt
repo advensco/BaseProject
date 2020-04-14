@@ -1,0 +1,2 @@
+-- EnableApiLogging:Boolean 
+to enable logging all api requests in DB

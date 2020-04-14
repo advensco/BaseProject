@@ -1,0 +1,8 @@
+1- Create Docker Image from Dockerfile 
+docker build -t odoo12 .
+
+2- delete docker Image 
+docker rmi <image ID>
+
+3- remove Docker container 
+docker rm <Container Id >

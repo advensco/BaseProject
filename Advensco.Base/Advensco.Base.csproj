@@ -257,11 +257,26 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logger\ApiLoggerAttribute.cs" />
+    <Compile Include="Logger\CustomErrorResult.cs" />
+    <Compile Include="Logger\GlobalExceptionHandler.cs" />
+    <Compile Include="Logger\LogModels.cs" />
+    <Compile Include="Logger\LogRequestAndResponseHandler.cs" />
+    <Compile Include="Logger\OverrideApiLoggerAttribute.cs" />
+    <Compile Include="Migrations\202004121308005_InitialCreate.cs" />
+    <Compile Include="Migrations\202004121308005_InitialCreate.Designer.cs">
+      <DependentUpon>202004121308005_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004121510481_Add_logger_Models.cs" />
+    <Compile Include="Migrations\202004121510481_Add_logger_Models.Designer.cs">
+      <DependentUpon>202004121510481_Add_logger_Models.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Response.cs" />
-    <Compile Include="Models\UserVM.cs" />
+    <Compile Include="Models\ViewModels\UserVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -341,6 +356,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202004121308005_InitialCreate.resx">
+      <DependentUpon>202004121308005_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004121510481_Add_logger_Models.resx">
+      <DependentUpon>202004121510481_Add_logger_Models.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

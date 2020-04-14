@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using Advensco.Base.Logger;
+using System.Web.Http.ExceptionHandling;
 
 namespace Advensco.Base
 {
@@ -26,6 +29,15 @@ namespace Advensco.Base
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // Register Logger 
+            bool isEnableApiLoggin = Boolean.Parse(ConfigurationManager.AppSettings["EnableApiLoggin"] ?? "false");
+            if (isEnableApiLoggin)
+                config.MessageHandlers.Add(new LogRequestAndResponseHandler());
+
+            // Register Global Exception Handler     
+            config.Services.Replace(typeof(IExceptionHandler),
+                new GlobalExceptionHandler());
         }
     }
 }
