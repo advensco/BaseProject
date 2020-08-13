@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace Advensco.Base.Controllers
 {
-    [Authorize]
+    [BasicAuthenticationAttribute]
     public class ValuesController : ApiController
     {
         // GET api/values
@@ -36,5 +36,10 @@ namespace Advensco.Base.Controllers
         public void Delete(int id)
         {
         }
+
+        //public (int t , string l ) test (string s)
+        //{
+        //    return (1, "asd");
+        //}
     }
 }

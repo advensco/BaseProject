@@ -45,7 +45,7 @@ namespace Advensco.Base.Logger
 
             using (Logger Logger = new Logger())
             {
-                Logger.LogApi(new ApiLog
+                Logger.LogApi(new Advensco.Base.Models.ApiLog
                 {
                     URL = actionExecutedContext.Request.RequestUri.LocalPath,
                     Method = actionExecutedContext.Request.Method.ToString(),

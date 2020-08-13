@@ -21,7 +21,7 @@ namespace Advensco.Base.Logger
 
         public   void Log(string message, string method = null)
         {
-            ctx.CustomLogs.Add(new CustomLog()
+            ctx.CustomLogs.Add(new Advensco.Base.Models.CustomLog()
             {
                 CreatedOn = DateTime.Now,
                 Method = method,
@@ -32,7 +32,7 @@ namespace Advensco.Base.Logger
         }
         public   void LogException(Exception exception, string message = null, string method = null)
         {
-            ctx.CustomLogs.Add(new CustomLog()
+            ctx.CustomLogs.Add(new Advensco.Base.Models.CustomLog()
             {
                 CreatedOn = DateTime.Now,
                 Method = method,
@@ -44,7 +44,7 @@ namespace Advensco.Base.Logger
            // ctx.SaveChanges();
         }
 
-        public   void LogApi(ApiLog apiApiLog)
+        public   void LogApi(Advensco.Base.Models.ApiLog apiApiLog)
         {
             ctx.ApiLogs.Add(apiApiLog);
           //  ctx.SaveChanges();
@@ -78,7 +78,7 @@ namespace Advensco.Base.Logger
             {
                 Logger.LogException(exception, "Unhandled Exception.", "Global Habdler.");
                 // log Request.  
-                Logger.LogApi(new ApiLog
+                Logger.LogApi(new Advensco.Base.Models.ApiLog
                 {
                     URL = context.Request.RequestUri.LocalPath,
                     Method = context.Request.Method.ToString(),

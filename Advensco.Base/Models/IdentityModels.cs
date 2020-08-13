@@ -7,6 +7,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin;
 using Advensco.Base.Logger;
 using System.Data.Entity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Advensco.Base.Models
 {
@@ -38,7 +39,7 @@ namespace Advensco.Base.Models
         // Logger Models 
         public DbSet<ApiLog> ApiLogs { get; set; }
         public DbSet<CustomLog> CustomLogs { get; set; }
-       
+        public DbSet<Employee> Employee { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -48,6 +49,13 @@ namespace Advensco.Base.Models
         {
             return new ApplicationDbContext();
         }
+    }
+    public class Employee
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
     }
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
