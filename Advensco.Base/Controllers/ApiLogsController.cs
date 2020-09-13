@@ -84,6 +84,7 @@ namespace Advensco.Base.Controllers
         {
             if (ModelState.IsValid)
             {
+                var t = 
                 db.Entry(apiLog).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

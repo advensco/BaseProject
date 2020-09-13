@@ -9,6 +9,9 @@ using Newtonsoft.Json.Serialization;
 using Advensco.Base.Logger;
 using System.Web.Http.ExceptionHandling;
 using Advensco.Base.Controllers;
+using System.Web.Http.OData.Builder;
+using System.Web.Http.OData.Extensions;
+using Advensco.Base.Models;
 
 namespace Advensco.Base
 {
@@ -16,6 +19,13 @@ namespace Advensco.Base
     {
         public static void Register(HttpConfiguration config)
         {
+
+
+            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Employee>("Employees");
+            config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());    
+
+
             config.EnableCors();
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.

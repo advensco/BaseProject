@@ -50,13 +50,7 @@ namespace Advensco.Base.Models
             return new ApplicationDbContext();
         }
     }
-    public class Employee
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
-    }
+   
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)

@@ -32,5 +32,6 @@ namespace Advensco.Base.Models
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<CustomLog> CustomLogs { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
     }
 }
