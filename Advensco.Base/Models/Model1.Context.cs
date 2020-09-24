@@ -25,6 +25,7 @@ namespace Advensco.Base.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<ApiLog> ApiLogs { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
@@ -32,6 +33,5 @@ namespace Advensco.Base.Models
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<CustomLog> CustomLogs { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
     }
 }

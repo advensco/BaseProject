@@ -69,6 +69,7 @@ function ATable(props) {
 		'div',
 		null,
 		React.createElement('span', null),
+		'sa',
 		React.createElement(
 			'table',
 			{ 'class': 'table table-striped  table-bordered' },

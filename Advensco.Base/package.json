@@ -3,11 +3,13 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "npx babel --watch src --out-dir . --presets react-app/prod",
-        "watch": "npx babel --watch src --out-dir ../../Scripts/ --presets react-app/prod"
-    },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx babel --watch src --out-dir . --presets react-app/prod",
+    "watch": "npx babel --watch src --out-dir ../../Scripts/ --presets react-app/prod",
+    "dev": "webpack --mode development --watch",
+    "webbuild": "webpack"
+  },
     "keywords": [],
     "author": "",
     "license": "ISC",

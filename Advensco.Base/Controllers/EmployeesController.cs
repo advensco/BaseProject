@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 using System.Web.Http.OData;
-using System.Web.Http.OData.Query;
 using System.Web.Http.OData.Routing;
 using Advensco.Base.Models;
-using Microsoft.Data.OData;
 
 namespace Advensco.Base.Controllers
 {
@@ -26,60 +26,68 @@ namespace Advensco.Base.Controllers
     */
     public class EmployeesController : ODataController
     {
-        private static ODataValidationSettings _validationSettings = new ODataValidationSettings();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: odata/Employees
-        public IHttpActionResult GetEmployees(ODataQueryOptions<Employee> queryOptions)
+        [EnableQuery(PageSize =5)]
+        public IQueryable<Employee> GetEmployees()
         {
-            // validate the query.
-            try
-            {
-                queryOptions.Validate(_validationSettings);
-            }
-            catch (ODataException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            //for (int i = 2; i < 50; i++)
+            //{
+            //    db.Employee.Add(new Employee
+            //    {
+            //        Id = i,
+            //        Name = $"Employee {i}",
+            //        Age = i + 12
+            //    });
 
-            // return Ok<IEnumerable<Employee>>(employees);
-            return StatusCode(HttpStatusCode.NotImplemented);
+            //}
+            db.SaveChanges();
+            return db.Employee;
         }
 
         // GET: odata/Employees(5)
-        public IHttpActionResult GetEmployee([FromODataUri] int key, ODataQueryOptions<Employee> queryOptions)
+        [EnableQuery]
+        public SingleResult<Employee> GetEmployee([FromODataUri] int key)
         {
-            // validate the query.
-            try
-            {
-                queryOptions.Validate(_validationSettings);
-            }
-            catch (ODataException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-            // return Ok<Employee>(employee);
-            return StatusCode(HttpStatusCode.NotImplemented);
+            return SingleResult.Create(db.Employee.Where(employee => employee.Id == key));
         }
 
         // PUT: odata/Employees(5)
-        public IHttpActionResult Put([FromODataUri] int key, Delta<Employee> delta)
+        public IHttpActionResult Put([FromODataUri] int key, Delta<Employee> patch)
         {
-            Validate(delta.GetEntity());
+            Validate(patch.GetEntity());
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            // TODO: Get the entity here.
+            Employee employee = db.Employee.Find(key);
+            if (employee == null)
+            {
+                return NotFound();
+            }
 
-            // delta.Put(employee);
+            patch.Put(employee);
 
-            // TODO: Save the patched entity.
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EmployeeExists(key))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            // return Updated(employee);
-            return StatusCode(HttpStatusCode.NotImplemented);
+            return Updated(employee);
         }
 
         // POST: odata/Employees
@@ -90,40 +98,77 @@ namespace Advensco.Base.Controllers
                 return BadRequest(ModelState);
             }
 
-            // TODO: Add create logic here.
+            db.Employee.Add(employee);
+            db.SaveChanges();
 
-            // return Created(employee);
-            return StatusCode(HttpStatusCode.NotImplemented);
+            return Created(employee);
         }
 
         // PATCH: odata/Employees(5)
         [AcceptVerbs("PATCH", "MERGE")]
-        public IHttpActionResult Patch([FromODataUri] int key, Delta<Employee> delta)
+        public IHttpActionResult Patch([FromODataUri] int key, Delta<Employee> patch)
         {
-            Validate(delta.GetEntity());
+            Validate(patch.GetEntity());
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            // TODO: Get the entity here.
+            Employee employee = db.Employee.Find(key);
+            if (employee == null)
+            {
+                return NotFound();
+            }
 
-            // delta.Patch(employee);
+            patch.Patch(employee);
 
-            // TODO: Save the patched entity.
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EmployeeExists(key))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            // return Updated(employee);
-            return StatusCode(HttpStatusCode.NotImplemented);
+            return Updated(employee);
         }
 
         // DELETE: odata/Employees(5)
         public IHttpActionResult Delete([FromODataUri] int key)
         {
-            // TODO: Add delete logic here.
+            Employee employee = db.Employee.Find(key);
+            if (employee == null)
+            {
+                return NotFound();
+            }
 
-            // return StatusCode(HttpStatusCode.NoContent);
-            return StatusCode(HttpStatusCode.NotImplemented);
+            db.Employee.Remove(employee);
+            db.SaveChanges();
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool EmployeeExists(int key)
+        {
+            return db.Employee.Count(e => e.Id == key) > 0;
         }
     }
 }
